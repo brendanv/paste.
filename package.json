@@ -34,5 +34,8 @@
 		"vite": "^6.2.6",
 		"vite-plugin-devtools-json": "^0.2.0",
 		"wrangler": "^4.22.0"
+	},
+	"dependencies": {
+		"@cloudflare/workers-types": "^4.20250627.0"
 	}
 }
