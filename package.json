@@ -36,6 +36,7 @@
 		"wrangler": "^4.22.0"
 	},
 	"dependencies": {
+		"@auth/sveltekit": "^1.10.0",
 		"@cloudflare/workers-types": "^4.20250627.0"
 	}
 }

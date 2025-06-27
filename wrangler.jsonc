@@ -32,17 +32,13 @@
 			"binding": "PASTE_KV",
 			"id": "2cee71ca21934172b47281a021d3a4b9"
 		}
-	]
+	],
 
 	/**
 	 * Environment Variables
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
 	 */
-	// "vars": { "MY_VARIABLE": "production_value" },
-	/**
-	 * Note: Use secrets to store sensitive data.
-	 * https://developers.cloudflare.com/workers/configuration/secrets/
-	 */
+	"vars": { "AUTH_AUTH0_DOMAIN": "https://auth.vlc.family" }
 
 	/**
 	 * Static Assets
