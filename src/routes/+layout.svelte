@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { signIn } from '@auth/sveltekit/client';
 	import type { LayoutData } from './$types';
+	import logo from '$lib/assets/logo_small.webp';
 	
 	export let data: LayoutData;
 	
@@ -11,7 +12,12 @@
 <header class="container">
 	<nav>
 		<ul>
-			<li><a href="/" class="brand"><strong>paste.</strong></a></li>
+			<li>
+				<a href="/" class="brand">
+					 <img src="{logo}" alt="paste." />
+					<strong>paste.</strong>
+				</a>
+			</li>
 		</ul>
 		<ul>
 			{#if session?.user}
@@ -41,6 +47,14 @@
 	.brand {
 		font-size: 1.2em;
 		text-decoration: none;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	
+	.brand img {
+		height: 1.5em;
+		width: auto;
 	}
 	
 	footer {
