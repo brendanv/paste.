@@ -38,7 +38,10 @@
 	 * Environment Variables
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
 	 */
-	"vars": { "AUTH_AUTH0_DOMAIN": "https://auth.vlc.family" }
+	"vars": { 
+		"AUTH_AUTH0_DOMAIN": "https://auth.vlc.family",
+		"GITHUB_REPO": "https://github.com/brendanv/paste"
+	}
 
 	/**
 	 * Static Assets

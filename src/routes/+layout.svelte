@@ -40,7 +40,7 @@
 
 <footer class="container">
 	<small class="secondary">
-		Semi-private paste service • Made with <a href="https://picocss.com" target="_blank">Pico CSS</a>
+		Made with <a href="https://picocss.com" target="_blank">Pico CSS</a> and <a href="https://svelte.dev" target="_blank">SvelteKit</a> • <a href="https://github.com/brendanv/paste" target="_blank">Available on GitHub</a>
 	</small>
 </footer>
 
