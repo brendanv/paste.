@@ -11,7 +11,21 @@ export const { handle, signIn } = SvelteKitAuth((event) => {
 			})
 		],
 		secret: event.platform.env.AUTH_SECRET,
-		trustHost: true
+		trustHost: true,
+		callbacks: {
+			jwt({ token, profile }) {
+				if (profile) {
+					token.id = profile.sub;
+				}
+				return token;
+			},
+			session({ session, token }) {
+				if (session.user) {
+					session.user.id = token.id as string;
+				}
+				return session;
+			}
+		}
 	};
 	return authOptions;
 });
