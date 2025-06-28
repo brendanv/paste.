@@ -27,9 +27,6 @@ function getExpirationTtl(expiration: string): number | null {
 
 export const load: PageServerLoad = async (event) => {
     const session = await event.locals.auth();
-    if (!session) {
-        throw redirect(302, '/welcome');
-    }
     return {
         session
     };
@@ -39,6 +36,7 @@ export const actions: Actions = {
     createPaste: async ({ request, locals, platform }) => {
         const session = await locals.auth();
         if (!session?.user) {
+            // This should not happen due to the hook, but as a safeguard:
             throw redirect(302, '/welcome');
         }
 
