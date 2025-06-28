@@ -4,63 +4,108 @@
 	export let form: ActionData;
 </script>
 
-{#if data.session?.user}
-	<h1>Hello, {data.session.user.name}!</h1>
+<main class="container">
+	{#if data.session?.user}
+		<header>
+			<hgroup>
+				<h1>Create a Paste</h1>
+				<p class="secondary">Hello, {data.session.user.name}!</p>
+			</hgroup>
+		</header>
 
-	<h2>Create New Paste</h2>
+		{#if form?.error}
+			<div class="error">
+				{form.error}
+			</div>
+		{/if}
 
-	{#if form?.error}
-		<div class="error" style="color: red; background: #ffe6e6; padding: 10px; border: 1px solid #ff0000; border-radius: 4px; margin-bottom: 15px;">
-			{form.error}
-		</div>
+		<form method="POST" action="?/createPaste">
+			<label for="content">
+				Code or Text
+				<textarea
+					id="content"
+					name="content"
+					rows="12"
+					placeholder="Paste your code here..."
+					required
+					aria-required="true"
+				></textarea>
+			</label>
+
+			<div class="grid">
+				<label for="title">
+					Title (optional)
+					<input type="text" id="title" name="title" placeholder="Enter a title for your paste" />
+				</label>
+
+				<label for="expiration">
+					Expiration
+					<select id="expiration" name="expiration" required>
+						<option value="never">Never</option>
+						<option value="1hour">1 Hour</option>
+						<option value="1day">1 Day</option>
+						<option value="1week">1 Week</option>
+						<option value="1month">1 Month</option>
+						<option value="6months">6 Months</option>
+						<option value="1year">1 Year</option>
+					</select>
+				</label>
+
+				<div>
+					<label for="visibility">
+						Visibility
+						<select id="visibility" name="visibility" required>
+							<option value="private">Private</option>
+							<option value="logged_in">All logged in users</option>
+							<option value="public">Public</option>
+						</select>
+					</label>
+					<small class="help-text">
+						Private: Only you can view this paste<br />
+						All logged in users: Any authenticated user can view<br />
+						Public: Anyone can view this paste
+					</small>
+				</div>
+			</div>
+
+			<div>
+				<label for="customSlug">Custom URL (optional)</label>
+				<input
+					type="text"
+					id="customSlug"
+					name="customSlug"
+					placeholder="my-custom-url"
+					pattern="[a-zA-Z0-9_\-]+"
+					minlength="3"
+					maxlength="50"
+					title="Custom URL can only contain letters, numbers, hyphens, and underscores"
+				/>
+				<small class="help-text">Letters, numbers, hyphens, and underscores only. Length: 3-50 characters</small>
+			</div>
+
+			<button type="submit">Create Paste</button>
+		</form>
+
+		<hr />
+
+		<form method="POST" action="/auth/signout">
+			<button type="submit" class="secondary">Sign Out</button>
+		</form>
+	{:else}
+		<main class="container">
+			<header>
+				<hgroup>
+					<h1>Paste Service</h1>
+					<p class="secondary">Please sign in to create pastes</p>
+				</hgroup>
+			</header>
+			<p>Not signed in.</p>
+		</main>
 	{/if}
+</main>
 
-	<form method="POST" action="?/createPaste">
-		<div>
-			<label for="title">Title (optional):</label>
-			<input type="text" id="title" name="title" />
-		</div>
-
-		<div>
-			<label for="content">Content *:</label>
-			<textarea id="content" name="content" rows="10" cols="80" required></textarea>
-		</div>
-
-		<div>
-			<label for="visibility">Visibility:</label>
-			<select id="visibility" name="visibility" required>
-				<option value="private">Private</option>
-				<option value="logged_in">All logged in users</option>
-				<option value="public">Public</option>
-			</select>
-		</div>
-
-		<div>
-			<label for="expiration">Expiration:</label>
-			<select id="expiration" name="expiration" required>
-				<option value="never">Never</option>
-				<option value="1hour">1 hour</option>
-				<option value="1day">1 day</option>
-				<option value="1week">1 week</option>
-				<option value="1month">1 month</option>
-				<option value="6months">6 months</option>
-				<option value="1year">1 year</option>
-			</select>
-		</div>
-
-		<div>
-			<label for="customSlug">Custom URL slug (optional):</label>
-			<input type="text" id="customSlug" name="customSlug" pattern="[a-zA-Z0-9_\-]+" minlength="3" maxlength="50" title="3-50 characters: letters, numbers, hyphens, and underscores only" />
-		</div>
-
-		<button type="submit">Create Paste</button>
-	</form>
-
-	<hr />
-
-	<form method="POST" action="/auth/signout">
-		<button>Sign Out</button>
-	</form>
-{:else}
-	<p>Not signed in.</p>
-{/if}
+<footer>
+	<small class="secondary">
+		Semi-private paste service • Made with <a href="https://picocss.com" target="_blank">Pico CSS</a>
+	</small>
+</footer>

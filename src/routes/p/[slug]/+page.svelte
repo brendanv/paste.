@@ -33,89 +33,31 @@
     <title>{paste.title || 'Untitled Paste'} - Paste Service</title>
 </svelte:head>
 
-<div class="container">
+<main class="container">
     <header>
-        <h1>{paste.title || 'Untitled Paste'}</h1>
-        <div class="metadata">
-            <p>Created: {formatDate(paste.createdAt)}</p>
-            <p>Visibility: {paste.visibility}</p>
-            <p>Slug: {paste.slug}</p>
-        </div>
+        <hgroup>
+            <h1>{paste.title || 'Untitled Paste'}</h1>
+            <p class="secondary">
+                Created: {formatDate(paste.createdAt)} • 
+                Visibility: {paste.visibility} • 
+                Slug: {paste.slug}
+            </p>
+        </hgroup>
     </header>
     
-    <main>
-        <div class="content">
-            <pre>{paste.content}</pre>
-        </div>
-    </main>
+    <article>
+        <pre><code>{paste.content}</code></pre>
+    </article>
     
-    <nav>
-        <a href="/">Create New Paste</a>
-        <button on:click={copyContent}>Copy Content</button>
-        <button on:click={copyLink}>Copy Link</button>
-    </nav>
-</div>
+    <div class="grid">
+        <a href="/" role="button" class="secondary">← Create New Paste</a>
+        <button type="button" on:click={copyContent}>Copy Content</button>
+        <button type="button" on:click={copyLink} class="outline">Copy Link</button>
+    </div>
+</main>
 
-<style>
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-    
-    header h1 {
-        margin-bottom: 10px;
-    }
-    
-    .metadata {
-        margin-bottom: 20px;
-        color: #666;
-    }
-    
-    .metadata p {
-        margin: 5px 0;
-    }
-    
-    .content {
-        background: #f5f5f5;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 15px;
-        margin-bottom: 20px;
-    }
-    
-    .content pre {
-        margin: 0;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        font-family: 'Courier New', monospace;
-    }
-    
-    nav {
-        display: flex;
-        gap: 15px;
-    }
-    
-    nav a {
-        color: #007bff;
-        text-decoration: none;
-    }
-    
-    nav a:hover {
-        text-decoration: underline;
-    }
-    
-    nav button {
-        background: #007bff;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-    }
-    
-    nav button:hover {
-        background: #0056b3;
-    }
-</style>
+<footer>
+    <small class="secondary">
+        Semi-private paste service • Made with <a href="https://picocss.com" target="_blank">Pico CSS</a>
+    </small>
+</footer>
