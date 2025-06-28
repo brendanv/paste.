@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '../app.css';
 	import { page } from '$app/stores';
 	import { signIn } from '@auth/sveltekit/client';
 	import type { LayoutData } from './$types';
