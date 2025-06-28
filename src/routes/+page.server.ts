@@ -111,6 +111,6 @@ export const actions: Actions = {
             return fail(500, { error: 'Failed to create paste' });
         }
 
-        return { success: true, slug };
+        throw redirect(303, `/p/${slug}`);
     }
 };
