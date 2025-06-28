@@ -15,12 +15,6 @@
 		</div>
 	{/if}
 
-	{#if form?.success}
-		<div class="success" style="color: green; background: #e6ffe6; padding: 10px; border: 1px solid #00aa00; border-radius: 4px; margin-bottom: 15px;">
-			Paste created successfully!
-		</div>
-	{/if}
-
 	<form method="POST" action="?/createPaste">
 		<div>
 			<label for="title">Title (optional):</label>

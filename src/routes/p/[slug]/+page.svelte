@@ -9,19 +9,24 @@
         return new Date(timestamp).toLocaleString();
     }
     
-    function getExpirationText(expiration: number | null): string {
-        if (!expiration) return 'Never';
-        const now = Date.now();
-        if (expiration <= now) return 'Expired';
-        
-        const diff = expiration - now;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        
-        if (days > 0) return `${days} day${days > 1 ? 's' : ''}`;
-        if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''}`;
-        return 'Less than 1 hour';
+    async function copyContent() {
+        try {
+            await navigator.clipboard.writeText(paste.content);
+        } catch (err) {
+            console.error('Failed to copy content: ', err);
+            alert('Failed to copy content');
+        }
     }
+    
+    async function copyLink() {
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+        } catch (err) {
+            console.error('Failed to copy link: ', err);
+            alert('Failed to copy link');
+        }
+    }
+    
 </script>
 
 <svelte:head>
@@ -34,7 +39,6 @@
         <div class="metadata">
             <p>Created: {formatDate(paste.createdAt)}</p>
             <p>Visibility: {paste.visibility}</p>
-            <p>Expires: {getExpirationText(paste.expiration)}</p>
             <p>Slug: {paste.slug}</p>
         </div>
     </header>
@@ -47,6 +51,8 @@
     
     <nav>
         <a href="/">Create New Paste</a>
+        <button on:click={copyContent}>Copy Content</button>
+        <button on:click={copyLink}>Copy Link</button>
     </nav>
 </div>
 
@@ -97,5 +103,19 @@
     
     nav a:hover {
         text-decoration: underline;
+    }
+    
+    nav button {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    
+    nav button:hover {
+        background: #0056b3;
     }
 </style>

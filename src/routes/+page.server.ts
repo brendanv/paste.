@@ -10,20 +10,19 @@ function generateRandomSlug(): string {
     return result;
 }
 
-function getExpirationTimestamp(expiration: string): number | null {
+function getExpirationTtl(expiration: string): number | null {
     if (expiration === 'never') return null;
     
-    const now = Date.now();
     const durations = {
-        '1hour': 60 * 60 * 1000,
-        '1day': 24 * 60 * 60 * 1000,
-        '1week': 7 * 24 * 60 * 60 * 1000,
-        '1month': 30 * 24 * 60 * 60 * 1000,
-        '6months': 6 * 30 * 24 * 60 * 60 * 1000,
-        '1year': 365 * 24 * 60 * 60 * 1000
+        '1hour': 60 * 60,
+        '1day': 24 * 60 * 60,
+        '1week': 7 * 24 * 60 * 60,
+        '1month': 30 * 24 * 60 * 60,
+        '6months': 6 * 30 * 24 * 60 * 60,
+        '1year': 365 * 24 * 60 * 60
     };
     
-    return now + (durations[expiration as keyof typeof durations] || 0);
+    return durations[expiration as keyof typeof durations] || null;
 }
 
 export const load: PageServerLoad = async (event) => {
@@ -71,7 +70,6 @@ export const actions: Actions = {
             }
         }
 
-        // Generate or use custom slug
         let slug = customSlug;
         if (!slug) {
             // Generate random slug and check availability
@@ -94,18 +92,23 @@ export const actions: Actions = {
             }
         }
 
-        const pasteData = {
-            content,
+        const metadata = {
             title: title || null,
             visibility,
-            expiration: getExpirationTimestamp(expiration),
             createdAt: Date.now(),
             userId: session.user.id,
             slug
         };
 
+        const expirationTtl = getExpirationTtl(expiration);
+        const putOptions: any = { metadata };
+        
+        if (expirationTtl) {
+            putOptions.expirationTtl = expirationTtl;
+        }
+
         try {
-            await platform?.env?.PASTE_KV?.put(`paste-${slug}`, JSON.stringify(pasteData));
+            await platform?.env?.PASTE_KV?.put(`paste-${slug}`, content, putOptions);
         } catch (error) {
             console.error('Failed to store paste:', error);
             return fail(500, { error: 'Failed to create paste' });
