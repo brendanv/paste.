@@ -1,10 +1,14 @@
 <script lang="ts">
-	import { signIn } from '@auth/sveltekit/client';
+	import type { PageData } from './$types';
+	export let data: PageData;
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+{#if data.session?.user}
+	<h1>Hello, {data.session.user.name}!</h1>
+	<form method="POST" action="/auth/signout">
+		<button>Sign Out</button>
+	</form>
+{:else}
+	<p>Not signed in.</p>
+{/if}
 
-<div>
-	<button on:click={signIn('auth0')}>Sign In</button>
-</div>
