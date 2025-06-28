@@ -58,16 +58,11 @@
 				<label for="visibility">
 					Visibility
 					<select id="visibility" name="visibility" required>
-						<option value="private">Private</option>
+						<option value="private">Private (only you)</option>
 						<option value="logged_in">All logged in users</option>
 						<option value="public">Public</option>
 					</select>
 				</label>
-				<small class="help-text">
-					Private: Only you can view this paste<br />
-					All logged in users: Any authenticated user can view<br />
-					Public: Anyone can view this paste
-				</small>
 			</div>
 		</div>
 
