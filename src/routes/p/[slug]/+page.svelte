@@ -26,6 +26,20 @@
             alert('Failed to copy link');
         }
     }
+    
+    async function deletePaste() {
+        if (!confirm('Are you sure you want to delete this paste? This action cannot be undone.')) {
+            return;
+        }
+        
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '?/delete';
+        document.body.appendChild(form);
+        form.submit();
+    }
+    
+    $: isOwner = data.session?.user?.id === paste.userId;
 </script>
 
 <svelte:head>
@@ -48,5 +62,8 @@
     <div role="group">
         <button type="button" on:click={copyContent}>Copy Content</button>
         <button type="button" on:click={copyLink} class="secondary">Copy Link</button>
+        {#if isOwner}
+            <button type="button" on:click={deletePaste} class="contrast outline">Delete</button>
+        {/if}
     </div>
 </section>

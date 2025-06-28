@@ -1,5 +1,5 @@
-import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { redirect, fail } from '@sveltejs/kit';
+import type { PageServerLoad, Actions } from './$types';
 
 export const load: PageServerLoad = async ({ params, locals, platform }) => {
     const { slug } = params;
@@ -40,4 +40,39 @@ export const load: PageServerLoad = async ({ params, locals, platform }) => {
         },
         session
     };
+};
+
+export const actions: Actions = {
+    delete: async ({ params, locals, platform }) => {
+        const { slug } = params;
+        const session = await locals.auth();
+
+        if (!session?.user) {
+            return fail(401, { error: 'Not authenticated' });
+        }
+
+        let pasteResult;
+        try {
+            pasteResult = await platform?.env?.PASTE_KV?.getWithMetadata(`paste-${slug}`);
+            if (!pasteResult?.value || !pasteResult?.metadata) {
+                return fail(404, { error: 'Paste not found' });
+            }
+        } catch (error) {
+            return fail(404, { error: 'Paste not found' });
+        }
+
+        const metadata = pasteResult.metadata as any;
+
+        if (session.user.id !== metadata.userId) {
+            return fail(403, { error: 'Not authorized to delete this paste' });
+        }
+
+        try {
+            await platform?.env?.PASTE_KV?.delete(`paste-${slug}`);
+        } catch (error) {
+            return fail(500, { error: 'Failed to delete paste' });
+        }
+
+        throw redirect(303, '/');
+    }
 };
