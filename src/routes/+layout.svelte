@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { page } from '$app/stores';
-	import { signIn } from '@auth/sveltekit/client';
+	import { signIn, signOut } from '@auth/sveltekit/client';
 	import type { LayoutData } from './$types';
 	import logo from '$lib/assets/logo_small.webp';
 	
@@ -23,6 +23,11 @@
 		<ul>
 			{#if session?.user}
 				<li><a href="/manage">Manage</a></li>
+				<li>
+					<button type="button" class="outline" on:click={() => signOut({ callbackUrl: '/' })}>
+						Sign Out
+					</button>
+				</li>
 			{:else}
 				<li>
 					<button type="button" class="outline" on:click={() => signIn('auth0', { callbackUrl: '/' })}>
