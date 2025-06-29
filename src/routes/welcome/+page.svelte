@@ -37,11 +37,11 @@
 		<h3>Examples</h3>
 		<p>View example pastes to see the features in action:</p>
 		<ul>
-			<li><a href="/p/python-example">Python code</a> - Script with syntax highlighting</li>
-			<li><a href="/p/web-dev-example">Web development</a> - HTML, CSS, JavaScript</li>
-			<li><a href="/p/config-example">Configuration files</a> - JSON, YAML, TOML</li>
-			<li><a href="/p/shell-example">Shell scripts</a> - Bash and PowerShell</li>
-			<li><a href="/p/data-example">Data formats</a> - CSV, XML, structured data</li>
+			<li><a href="/p/python-example/python">Python code</a> - Script with syntax highlighting</li>
+			<li><a href="/p/web-dev-example/html">Web development</a> - HTML, CSS, JavaScript</li>
+			<li><a href="/p/config-example/json">Configuration files</a> - JSON, YAML, TOML</li>
+			<li><a href="/p/shell-example/bash">Shell scripts</a> - Bash and PowerShell</li>
+			<li><a href="/p/data-example/xml">Data formats</a> - CSV, XML, structured data</li>
 			<li><a href="/p/text-example">Plain text</a> - Simple text sharing</li>
 		</ul>
 	</article>
