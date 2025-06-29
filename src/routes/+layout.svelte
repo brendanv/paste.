@@ -4,9 +4,9 @@
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import type { LayoutData } from './$types';
 	import logo from '$lib/assets/logo_small.webp';
-	
+
 	export let data: LayoutData;
-	
+
 	$: session = data.session;
 </script>
 
@@ -15,7 +15,7 @@
 		<ul>
 			<li>
 				<a href="/" class="brand">
-					 <img src="{logo}" alt="paste." />
+					<img src={logo} alt="paste." />
 					<strong>paste.</strong>
 				</a>
 			</li>
@@ -30,7 +30,11 @@
 				</li>
 			{:else}
 				<li>
-					<button type="button" class="outline" on:click={() => signIn('auth0', { callbackUrl: '/' })}>
+					<button
+						type="button"
+						class="outline"
+						on:click={() => signIn('auth0', { callbackUrl: '/' })}
+					>
 						Sign In
 					</button>
 				</li>
@@ -45,7 +49,9 @@
 
 <footer class="container">
 	<small class="secondary">
-		Made with <a href="https://picocss.com" target="_blank">Pico CSS</a> and <a href="https://svelte.dev" target="_blank">SvelteKit</a> • <a href="https://github.com/brendanv/paste" target="_blank">Available on GitHub</a>
+		Made with <a href="https://picocss.com" target="_blank">Pico CSS</a> and
+		<a href="https://svelte.dev" target="_blank">SvelteKit</a>
+		• <a href="https://github.com/brendanv/paste" target="_blank">Available on GitHub</a>
 	</small>
 </footer>
 
@@ -57,15 +63,14 @@
 		align-items: center;
 		gap: 0.5rem;
 	}
-	
+
 	.brand img {
 		height: 1.5em;
 		width: auto;
 	}
-	
+
 	footer {
 		text-align: center;
 		margin-top: 2rem;
 	}
-	
 </style>

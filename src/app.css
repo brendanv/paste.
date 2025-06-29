@@ -50,22 +50,22 @@ main {
 }
 
 @media (max-width: 768px) {
-	[role="group"] {
+	[role='group'] {
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
 	}
-	
+
 	pre {
 		overflow-x: auto;
 		-webkit-overflow-scrolling: touch;
 	}
-	
+
 	.grid {
 		grid-template-columns: 1fr !important;
 		gap: 1rem;
 	}
-	
+
 	nav ul {
 		flex-wrap: wrap;
 		gap: 0.5rem;

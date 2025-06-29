@@ -4,7 +4,7 @@
 	import { enhance } from '$app/forms';
 	export let data: PageData;
 	export let form: ActionData;
-	
+
 	let isSubmitting = false;
 </script>
 
@@ -16,7 +16,9 @@
 	<header>
 		<hgroup>
 			<h1>Create a Paste</h1>
-			<p class="secondary">Hello, {data.session.user.name}!</p>
+			<p class="secondary">
+				Hello, {data.session.user.name?.split(' ')[0] || data.session.user.name}!
+			</p>
 		</hgroup>
 	</header>
 
@@ -24,13 +26,17 @@
 		<Alert type="error" message={form.error} />
 	{/if}
 
-	<form method="POST" action="?/createPaste" use:enhance={() => {
-		isSubmitting = true;
-		return async ({ update }) => {
-			await update();
-			isSubmitting = false;
-		};
-	}}>
+	<form
+		method="POST"
+		action="?/createPaste"
+		use:enhance={() => {
+			isSubmitting = true;
+			return async ({ update }) => {
+				await update();
+				isSubmitting = false;
+			};
+		}}
+	>
 		<label for="content">
 			Code or Text
 			<textarea
@@ -86,7 +92,9 @@
 				maxlength="50"
 				title="Custom URL can only contain letters, numbers, hyphens, and underscores"
 			/>
-			<small class="help-text">Letters, numbers, hyphens, and underscores only. Length: 3-50 characters</small>
+			<small class="help-text"
+				>Letters, numbers, hyphens, and underscores only. Length: 3-50 characters</small
+			>
 		</div>
 
 		<button type="submit" disabled={isSubmitting}>
@@ -100,7 +108,7 @@
 			<p class="secondary">A semi-private paste service for sharing code and text</p>
 		</hgroup>
 	</header>
-	
+
 	<section>
 		<p>Please sign in to create and manage your pastes.</p>
 	</section>
