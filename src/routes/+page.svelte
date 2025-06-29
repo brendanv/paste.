@@ -1,7 +1,11 @@
 <script lang="ts">
 	import type { PageData, ActionData } from './$types';
+	import Alert from '$lib/components/Alert.svelte';
+	import { enhance } from '$app/forms';
 	export let data: PageData;
 	export let form: ActionData;
+	
+	let isSubmitting = false;
 </script>
 
 <svelte:head>
@@ -17,12 +21,16 @@
 	</header>
 
 	{#if form?.error}
-		<div class="error">
-			{form.error}
-		</div>
+		<Alert type="error" message={form.error} />
 	{/if}
 
-	<form method="POST" action="?/createPaste">
+	<form method="POST" action="?/createPaste" use:enhance={() => {
+		isSubmitting = true;
+		return async ({ update }) => {
+			await update();
+			isSubmitting = false;
+		};
+	}}>
 		<label for="content">
 			Code or Text
 			<textarea
@@ -81,7 +89,9 @@
 			<small class="help-text">Letters, numbers, hyphens, and underscores only. Length: 3-50 characters</small>
 		</div>
 
-		<button type="submit">Create Paste</button>
+		<button type="submit" disabled={isSubmitting}>
+			{isSubmitting ? 'Creating...' : 'Create Paste'}
+		</button>
 	</form>
 {:else}
 	<header>

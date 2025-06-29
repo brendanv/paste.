@@ -15,18 +15,41 @@ footer {
 	font-family: var(--pico-font-family-monospace);
 }
 .error {
-	color: var(--pico-color-red-500);
-	background: var(--pico-color-red-50);
+	color: var(--pico-del-color);
+	background: var(--pico-del-background-color);
 	padding: 1rem;
-	border: 1px solid var(--pico-color-red-200);
+	border: 1px solid var(--pico-del-color);
 	border-radius: var(--pico-border-radius);
 	margin-bottom: 1rem;
 }
 .success {
-	color: var(--pico-color-green-500);
-	background: var(--pico-color-green-50);
+	color: var(--pico-ins-color);
+	background: var(--pico-ins-background-color);
 	padding: 1rem;
-	border: 1px solid var(--pico-color-green-200);
+	border: 1px solid var(--pico-ins-color);
 	border-radius: var(--pico-border-radius);
 	margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+	[role="group"] {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	
+	pre {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+	
+	.grid {
+		grid-template-columns: 1fr !important;
+		gap: 1rem;
+	}
+	
+	nav ul {
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
 }

@@ -68,12 +68,4 @@
 		margin-top: 2rem;
 	}
 	
-	.error {
-		background-color: var(--pico-color-red-100);
-		border: 1px solid var(--pico-color-red-500);
-		color: var(--pico-color-red-700);
-		padding: 1rem;
-		border-radius: var(--pico-border-radius);
-		margin-bottom: 1rem;
-	}
 </style>

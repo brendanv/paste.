@@ -65,11 +65,11 @@
         <pre><code>{paste.content}</code></pre>
     {/if}
     
-    <div role="group">
+    <div class="grid">
         <button type="button" on:click={copyContent}>Copy Content</button>
         <button type="button" on:click={copyLink} class="secondary">Copy Link</button>
         {#if isOwner}
-            <button type="button" on:click={deletePaste} class="contrast outline">Delete</button>
+            <button type="button" on:click={deletePaste} class="contrast">Delete</button>
         {/if}
     </div>
 </section>

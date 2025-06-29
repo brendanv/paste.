@@ -1,11 +1,15 @@
 <script lang="ts">
     import type { PageData } from './$types';
     import { enhance } from '$app/forms';
+    import Alert from '$lib/components/Alert.svelte';
     
     export let data: PageData;
     export let form: any;
     
     $: apiKey = form?.deleted ? null : (data.apiKey || form?.apiKey);
+    
+    let isGenerating = false;
+    let isDeleting = false;
     
     function copyToClipboard() {
         if (apiKey) {
@@ -38,21 +42,15 @@
             </header>
             
             {#if form?.error}
-                <div class="error">
-                    {form.error}
-                </div>
+                <Alert type="error" message={form.error} />
             {/if}
             
             {#if form?.success && !form?.deleted}
-                <div class="success">
-                    API key generated successfully!
-                </div>
+                <Alert type="success" message="API key generated successfully!" />
             {/if}
             
             {#if form?.success && form?.deleted}
-                <div class="success">
-                    API key deleted successfully!
-                </div>
+                <Alert type="success" message="API key deleted successfully!" />
             {/if}
             
             {#if apiKey}
@@ -63,15 +61,27 @@
                         Copy API Key
                     </button>
                     
-                    <form method="POST" action="?/generateApiKey" use:enhance>
-                        <button type="submit" class="secondary">
-                            Regenerate
+                    <form method="POST" action="?/generateApiKey" use:enhance={() => {
+                        isGenerating = true;
+                        return async ({ update }) => {
+                            await update();
+                            isGenerating = false;
+                        };
+                    }}>
+                        <button type="submit" class="secondary" disabled={isGenerating}>
+                            {isGenerating ? 'Regenerating...' : 'Regenerate'}
                         </button>
                     </form>
                     
-                    <form method="POST" action="?/deleteApiKey" use:enhance>
-                        <button type="submit" class="outline contrast">
-                            Delete
+                    <form method="POST" action="?/deleteApiKey" use:enhance={() => {
+                        isDeleting = true;
+                        return async ({ update }) => {
+                            await update();
+                            isDeleting = false;
+                        };
+                    }}>
+                        <button type="submit" class="contrast" disabled={isDeleting}>
+                            {isDeleting ? 'Deleting...' : 'Delete'}
                         </button>
                     </form>
                 </div>
@@ -80,9 +90,15 @@
                     Warning: Regenerating or deleting your API key will invalidate the current one.
                 </small>
             {:else}
-                <form method="POST" action="?/generateApiKey" use:enhance>
-                    <button type="submit">
-                        Generate API Key
+                <form method="POST" action="?/generateApiKey" use:enhance={() => {
+                    isGenerating = true;
+                    return async ({ update }) => {
+                        await update();
+                        isGenerating = false;
+                    };
+                }}>
+                    <button type="submit" disabled={isGenerating}>
+                        {isGenerating ? 'Generating...' : 'Generate API Key'}
                     </button>
                 </form>
                 

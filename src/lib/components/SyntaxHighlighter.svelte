@@ -5,7 +5,7 @@
 
     export let code: string;
     export let language: BundledLanguage;
-    export let theme: BundledTheme = 'github-dark';
+    export let theme: BundledTheme = 'material-theme-palenight';
 
     let highlightedCode = '';
     let loading = true;
@@ -46,16 +46,8 @@
         color: var(--pico-muted-color);
     }
 
-    .error {
-        padding: 1rem;
-        border: 1px solid var(--pico-del-color);
-        border-radius: var(--pico-border-radius);
-        background-color: var(--pico-del-background-color);
-    }
-
     .error p {
         margin-top: 0;
-        color: var(--pico-del-color);
     }
 
     .highlighted-code {
