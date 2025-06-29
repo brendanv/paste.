@@ -1,9 +1,10 @@
 <script lang="ts">
     import type { PageData } from './$types';
+    import SyntaxHighlighter from '$lib/components/SyntaxHighlighter.svelte';
     
     export let data: PageData;
     
-    const { paste } = data;
+    const { paste, language } = data;
     
     function formatDate(timestamp: number): string {
         return new Date(timestamp).toLocaleString();
@@ -40,10 +41,11 @@
     }
     
     $: isOwner = data.session?.user?.id === paste.userId;
+    $: titleSuffix = language ? ` (${language})` : '';
 </script>
 
 <svelte:head>
-    <title>{paste.title || 'Untitled Paste'} - paste.</title>
+    <title>{paste.title || 'Untitled Paste'}{titleSuffix} - paste.</title>
 </svelte:head>
 
 <header>
@@ -51,13 +53,17 @@
         <h1>{paste.title || 'Untitled Paste'}</h1>
         <p>
             Created: {formatDate(paste.createdAt)} • 
-            Visibility: {paste.visibility}
+            Visibility: {paste.visibility}{language ? ` • Language: ${language}` : ''}
         </p>
     </hgroup>
 </header>
 
 <section>
+    {#if language}
+        <SyntaxHighlighter code={paste.content} {language} />
+    {:else}
         <pre><code>{paste.content}</code></pre>
+    {/if}
     
     <div role="group">
         <button type="button" on:click={copyContent}>Copy Content</button>

@@ -1,9 +1,18 @@
 import { redirect, fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
+import { bundledLanguages, type BundledLanguage } from 'shiki';
+
+// Get supported languages from Shiki
+const supportedLanguages = Object.keys(bundledLanguages) as BundledLanguage[];
 
 export const load: PageServerLoad = async ({ params, locals, platform }) => {
-    const { slug } = params;
+    const { slug, lang } = params;
     const session = await locals.auth();
+
+    // Validate language parameter if provided
+    if (lang && !supportedLanguages.includes(lang as BundledLanguage)) {
+        throw redirect(302, `/p/${slug}`);
+    }
 
     let pasteResult;
     try {
@@ -38,7 +47,8 @@ export const load: PageServerLoad = async ({ params, locals, platform }) => {
             userId: metadata.userId,
             slug: metadata.slug
         },
-        session
+        session,
+        language: lang as BundledLanguage | undefined
     };
 };
 

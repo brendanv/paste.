@@ -38,6 +38,7 @@
 	"dependencies": {
 		"@auth/sveltekit": "^1.10.0",
 		"@cloudflare/workers-types": "^4.20250627.0",
-		"@picocss/pico": "^2.0.6"
+		"@picocss/pico": "^2.0.6",
+		"shiki": "^3.7.0"
 	}
 }
