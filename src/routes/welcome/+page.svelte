@@ -3,7 +3,8 @@
 </script>
 
 <svelte:head>
-    <title>Welcome - paste.</title>
+    <title>paste. - Code & Text Sharing</title>
+    <meta name="description" content="A paste service for sharing code and text with privacy controls, syntax highlighting, and expiration options.">
 </svelte:head>
 
 <header>
@@ -13,14 +14,35 @@
     </hgroup>
 </header>
 
-<section>
-    <article>
-        <p>Creation of new pastes is only available to logged in users. You can 
-            view an <a href="/p/welcome">example paste</a> to see how it works.</p>
-        <p>Otherwise, please 
-            <button type="button" class="outline" on:click={() => signIn('auth0', { callbackUrl: '/' })}>
-                sign in
+    <section>
+        <article>
+            <h3>Key Features</h3>
+            <ul>
+                <li><strong>Privacy controls</strong> - Choose who can view your pastes (public, private, or logged-in users only)</li>
+                <li><strong>Syntax highlighting</strong> - Code formatting for popular programming languages</li>
+                <li><strong>Expiration options</strong> - Set pastes to expire from 1 hour to 1 year, or keep forever</li>
+                <li><strong>API access</strong> - Simple JSON API for creating pastes on the go</li>
+            </ul>
+
+            <h3>Examples</h3>
+            <p>View example pastes to see the features in action:</p>
+            <ul>
+                <li><a href="/p/python-example">Python code</a> - Script with syntax highlighting</li>
+                <li><a href="/p/web-dev-example">Web development</a> - HTML, CSS, JavaScript</li>
+                <li><a href="/p/config-example">Configuration files</a> - JSON, YAML, TOML</li>
+                <li><a href="/p/shell-example">Shell scripts</a> - Bash and PowerShell</li>
+                <li><a href="/p/data-example">Data formats</a> - CSV, XML, structured data</li>
+                <li><a href="/p/text-example">Plain text</a> - Simple text sharing</li>
+            </ul>
+        </article>
+    </section>
+
+    <section>
+        <article style="text-align: center; padding: 2rem; background: var(--pico-card-background-color); border-radius: var(--pico-border-radius);">
+            <h2>Get Started</h2>
+            <p>Sign in to create and manage pastes.</p>
+            <button type="button" class="contrast" style="margin: 1rem;" on:click={() => signIn('auth0', { callbackUrl: '/' })}>
+                Sign In
             </button>
-        </p>
-    </article>
-</section>
+        </article>
+    </section>
